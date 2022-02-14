@@ -8,17 +8,23 @@ public class Game extends Canvas implements Runnable{
     private boolean isRunning = false;
     private Thread thread;
     private Handler handler;
+    private Input input;
 
     public Game(){
         new Fenetre(1000, 563, "Bing Qi Ling", this);
         start();
+        init();
 
-        handler = new Handler();
-        this.addKeyListener(new Input(handler));
 
-        handler.addObject(new Joueur(100,100,ID.Player, handler));
     }
 
+    private void init(){
+        this.handler= new Handler();
+        this.input = new Input();
+        this.addKeyListener(input);
+
+        handler.addObject(new Joueur(100,100,ID.Player, this.input));
+    }
     private void start(){
         isRunning=true;
         thread = new Thread(this);
@@ -70,7 +76,7 @@ public class Game extends Canvas implements Runnable{
             this.createBufferStrategy(3);
             return;
         }
-        Graphics g = bs.getDrawGraphics();
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
         g.setColor(Color.gray);
         g.fillRect(0,0,1000,563);
         handler.render(g);
