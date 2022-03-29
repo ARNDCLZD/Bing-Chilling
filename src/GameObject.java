@@ -1,19 +1,22 @@
 import java.awt.*;
 
 public abstract class GameObject {
-    protected int x,y;
+
+    protected int x, y;
     protected float velX = 0, velY = 0;
     protected ID id;
+    protected SpriteSheet ss;
 
-    public GameObject(int x, int y, ID id){
+    public GameObject(int x, int y, ID id, SpriteSheet ss) {
         this.x = x;
         this.y = y;
         this.id = id;
+        this.ss = ss;
     }
 
     public abstract void tick();
     public abstract void render(Graphics g);
-    public abstract Rectangle getBounds();
+    public abstract Rectangle getBounds();   //détection des collisions
 
     public ID getId() {
         return id;
@@ -22,7 +25,7 @@ public abstract class GameObject {
     public void setId(ID id) {
         this.id = id;
     }
-
+    
     public int getX() {
         return x;
     }
@@ -54,4 +57,5 @@ public abstract class GameObject {
     public void setVelY(float velY) {
         this.velY = velY;
     }
+
 }

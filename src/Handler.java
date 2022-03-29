@@ -1,63 +1,67 @@
 import java.awt.*;
-import java.util.LinkedList;
+import java.util.*;
 
+//handles (updates) tous les GameObjects qui se trouvent dans le jeu.
 public class Handler {
-    LinkedList<GameObject> object = new LinkedList<GameObject>();
+	
+    ArrayList<GameObject> object = new ArrayList<GameObject>();
+    
+    private boolean up = false, down = false, right = false, left = false;
 
-    private boolean haut = false, bas = false, gauche = false, droite = false;
+    public boolean isUp() {
+		return up;
+	}
 
-    public void tick(){
-        for(int i=0; i< object.size(); i++){
+	public void setUp(boolean up) {
+		this.up = up;
+	}
+
+	public boolean isDown() {
+		return down;
+	}
+
+	public void setDown(boolean down) {
+		this.down = down;
+	}
+
+	public boolean isRight() {
+		return right;
+	}
+
+	public void setRight(boolean right) {
+		this.right = right;
+	}
+
+	public boolean isLeft() {
+		return left;
+	}
+
+	public void setLeft(boolean left) {
+		this.left = left;
+	}
+
+	public void tick() {
+        for(int i = 0; i < object.size(); i++) {
             GameObject tempObject = object.get(i);
+
             tempObject.tick();
         }
     }
 
-    public void render(Graphics g){
-        for(int i = 0; i < object.size(); i++){
+    public void render(Graphics g) {
+        for(int i = 0; i < object.size(); i++) {
             GameObject tempObject = object.get(i);
 
             tempObject.render(g);
         }
     }
 
-    public void addObject(GameObject tempObject){
-        this.object.add(tempObject);
+    public void addObject(GameObject tempObject) {
+        object.add(tempObject);
     }
 
-    public void removeObject(GameObject tempObject){
-        this.object.remove(tempObject);
+    public void removeObject(GameObject tempObject) {
+        object.remove(tempObject);
     }
 
-    public void setHaut(boolean haut) {
-        this.haut = haut;
-    }
-
-    public void setBas(boolean bas) {
-        this.bas = bas;
-    }
-
-    public void setGauche(boolean gauche) {
-        this.gauche = gauche;
-    }
-
-    public void setDroite(boolean droite) {
-        this.droite = droite;
-    }
-
-    public boolean isHaut() {
-        return haut;
-    }
-
-    public boolean isBas() {
-        return bas;
-    }
-
-    public boolean isGauche() {
-        return gauche;
-    }
-
-    public boolean isDroite() {
-        return droite;
-    }
 }

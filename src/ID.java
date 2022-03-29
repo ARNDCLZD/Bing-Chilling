@@ -1,7 +1,10 @@
 public enum ID {
-    Player(),
-    Block(),
-    Crate(),
-    Bullet(),
-    Enemy(),
+	
+	//GameObjects
+	Player(),
+	Block(),
+	Crate(),
+	Bullet(),
+	Enemy();
+	
 }
