@@ -1,20 +1,23 @@
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class EnemySpawner extends GameObject {
-    private final int TIMER = 120*6;
+    public int rate = 6;
+    private int timer = 120*rate;
     private int tickCount = 0;
     private Handler handler;
-    public EnemySpawner(int x, int y, ID id, Handler handler, SpriteSheet ss) {
+    private Game game;
+    public EnemySpawner(int x, int y, ID id, Handler handler, SpriteSheet ss, Game game) {
         super(x, y, id, ss);
         this.handler=handler;
+        this.game = game;
     }
 
     @Override
     public void tick() {
         this.tickCount++;
-        if(this.tickCount%TIMER==0){
-            this.handler.addObject(new Enemy(this.x,this.y,ID.Enemy,this.handler, this.ss));
+        updateTimer();
+        if(this.tickCount% timer ==0){
+            this.handler.addObject(new Enemy(this.x,this.y,ID.Enemy,this.handler, this.ss,this.game));
         }
     }
 
@@ -26,5 +29,9 @@ public class EnemySpawner extends GameObject {
     @Override
     public Rectangle getBounds() {
         return new Rectangle(40,40);
+    }
+
+    private void updateTimer(){
+        this.timer=120*rate;
     }
 }

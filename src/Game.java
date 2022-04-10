@@ -1,7 +1,4 @@
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -15,6 +12,7 @@ public class Game extends Canvas implements Runnable{
     private Handler handler;
     private Camera camera;
     private SpriteSheet ss;
+    public int tickCount=0;
     
     private BufferedImage world = null;
     private BufferedImage sprite_sheet = null;
@@ -22,6 +20,8 @@ public class Game extends Canvas implements Runnable{
     
     public int ammo = 100;
     public int hp = 100;
+    public int reloadTimer = 3;
+    public int score = 0;
 
     public Game() {
         new Window(1000, 563, "Bing Chilling", this);
@@ -48,7 +48,7 @@ public class Game extends Canvas implements Runnable{
     //start thread
     private void start() {
         isRunning = true;
-        thread = new Thread(this);  //"this" comme dans la m�thode d'ex�cution de la classe
+        thread = new Thread(this);  //"this" comme dans la méthode d'exécution de la classe
         thread.start();
     }
 
@@ -91,23 +91,37 @@ public class Game extends Canvas implements Runnable{
         stop();
     }
 
-    //mets tout les objets du jeu � jour
+    //
     public void tick() {
-    		for(int i = 0; i < handler.object.size(); i++) {
-    			if(handler.object.get(i).getId() == ID.Player) {
-    				camera.tick(handler.object.get(i));
-    			}
-    		}
-    		
-        handler.tick();
+        this.tickCount++;
+        for(int i = 0; i < handler.object.size(); i++) {
+            if(handler.object.get(i).getId() == ID.Player) {
+                camera.tick(handler.object.get(i));
+            }
+            if(handler.object.get(i).getId() == ID.EnemySpawner) {
+                if(this.tickCount%1200==0){
+                    if(((EnemySpawner)(handler.object.get(i))).rate>1)
+                        ((EnemySpawner)(handler.object.get(i))).rate -=1;
+                }
+            }
+        }
+        if(this.tickCount%(120*this.reloadTimer)==0){
+            this.ammo+=2;
+        }
+        if(this.hp>100) this.hp=100;
+    handler.tick();
+
+        //Score
+        if(this.tickCount%120==0&&this.hp>0)
+            this.score++;
     }
 
-  //rend ("draws") tout dans le jeu - quelques milliers de fois par seconde
+  //
     public void render() {
         BufferStrategy bs = this.getBufferStrategy();
         
         if(bs == null) {
-            this.createBufferStrategy(3);   //pr�chargement des cadres avant leur affichage
+            this.createBufferStrategy(3);   //
             return;
         }
 
@@ -132,18 +146,22 @@ public class Game extends Canvas implements Runnable{
         
         g.setColor(Color.red);
         g.fillRect(5, 5, hp*2, 32);
+
+        g.setFont(new Font("Comic Sans Ms",Font.BOLD,200));
         if(hp == 0) {
-        	g.setColor(Color.green);
-        	g.drawString("Game Over!", 500, 250);
+        	g.setColor(Color.orange);
+        	g.drawString("Fini!", 300, 250);
         }
         
         g.setColor(Color.black);
         g.drawRect(5, 5, 200, 32);
         
         g.setColor(Color.orange);
-        g.drawString("Spells: " + ammo, 5, 50);
+        g.setFont(new Font("Herculanum",Font.BOLD,15));
+        g.drawString("Munitions: " + ammo, 5, 50);
 
-        //////////////////////////////////
+        g.drawString("Score : "+this.score,500,20);
+
         g.dispose();
         bs.show();
     }
@@ -168,10 +186,10 @@ public class Game extends Canvas implements Runnable{
 					handler.addObject(new Joueur(xx * 32, yy * 32, ID.Player, handler, this, ss));
 				}
 				if(green == 255 && blue == 0) {
-					handler.addObject(new EnemySpawner(xx * 32, yy * 32, ID.Enemy, handler, ss));
+					handler.addObject(new EnemySpawner(xx * 32, yy * 32, ID.EnemySpawner, handler, ss, this));
 				}
 				if(green == 255 && blue == 255) {
-					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
+					handler.addObject(new AmmoCrate(xx * 32, yy * 32, ID.AmmoCrate, ss));
 				}
 			}
 		}

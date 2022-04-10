@@ -6,7 +6,8 @@ import java.awt.image.BufferedImage;
 public class Joueur extends GameObject{
 	
 	private Handler handler;
-	private Game game;
+	public Game game;
+	private int reloadTimer = 3;
 
 	private BufferedImage[] joueurImage = new BufferedImage[3];
 	
@@ -58,10 +59,18 @@ public class Joueur extends GameObject{
 				}
 			}
 			
-			if(tempObject.getId() == ID.Crate) {
+			if(tempObject.getId() == ID.AmmoCrate) {
 				
 				if(getBounds().intersects(tempObject.getBounds())) {
-					game.ammo += 10;
+					game.ammo += 5;
+					handler.removeObject(tempObject);
+				}
+			}
+
+			if(tempObject.getId() == ID.HealthCrate) {
+
+				if(getBounds().intersects(tempObject.getBounds())) {
+					game.hp += 5;
 					handler.removeObject(tempObject);
 				}
 			}

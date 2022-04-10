@@ -3,7 +3,9 @@ public enum ID {
 	//GameObjects
 	Player(),
 	Block(),
-	Crate(),
+	EnemySpawner(),
+	AmmoCrate(),
+	HealthCrate(),
 	Bullet(),
 	Enemy();
 	
