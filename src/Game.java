@@ -24,7 +24,7 @@ public class Game extends Canvas implements Runnable{
     public int score = 0;
 
     public Game() {
-        new Window(1000, 563, "Bing Chilling", this);
+        new Window(1000, 563, "Bing Chilling Survival", this);
 
         start();
 
@@ -147,10 +147,10 @@ public class Game extends Canvas implements Runnable{
         g.setColor(Color.red);
         g.fillRect(5, 5, hp*2, 32);
 
-        g.setFont(new Font("Comic Sans Ms",Font.BOLD,200));
+        g.setFont(new Font("Comic Sans Ms",Font.BOLD,100));
         if(hp == 0) {
         	g.setColor(Color.orange);
-        	g.drawString("Fini!", 300, 250);
+        	g.drawString("Game Over !", 150, 250);
         }
         
         g.setColor(Color.black);
