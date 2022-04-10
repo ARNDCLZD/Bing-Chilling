@@ -10,7 +10,7 @@ public class HealthCrate extends GameObject{
     public HealthCrate(int x, int y, ID id, SpriteSheet ss) {
         super(x, y, id, ss);
 
-        crateImage = ss.grabImage(6, 2, 32, 32);
+        crateImage = ss.grabImage(7, 2, 32, 32);
     }
 
     public void tick() {
