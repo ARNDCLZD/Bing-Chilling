@@ -12,9 +12,9 @@ public class Camera {
 		y += ((object.getY() - y) - 563 / 2) * 0.05f;
 		
 		if(x <= 0) x = 0;
-		if(x >= 1032) x = 1032;
+		if(x >= 1150) x = 1150;
 		if(y <= 0) y = 0;
-		if(y >= 611) y = 611;
+		if(y >= 1650) y = 1650;
 	}
 
 	public float getX() {

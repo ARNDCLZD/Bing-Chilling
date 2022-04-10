@@ -19,7 +19,7 @@ public class Game extends Canvas implements Runnable{
     private BufferedImage floor = null;
     
     public int ammo = 100;
-    public int hp = 100;
+    public int hp = 200;
     public int reloadTimer = 3;
     public int score = 0;
 
@@ -108,7 +108,7 @@ public class Game extends Canvas implements Runnable{
         if(this.tickCount%(120*this.reloadTimer)==0){
             this.ammo+=2;
         }
-        if(this.hp>100) this.hp=100;
+        if(this.hp>200) this.hp=200;
     handler.tick();
 
         //Score
@@ -142,10 +142,10 @@ public class Game extends Canvas implements Runnable{
         
         
         g.setColor(Color.gray);
-        g.fillRect(5, 5, 200, 32);
+        g.fillRect(5, 485, 400, 32);
         
         g.setColor(Color.red);
-        g.fillRect(5, 5, hp*2, 32);
+        g.fillRect(5, 485, hp*2, 32);
 
         g.setFont(new Font("Comic Sans Ms",Font.BOLD,100));
         if(hp == 0) {
@@ -154,11 +154,11 @@ public class Game extends Canvas implements Runnable{
         }
         
         g.setColor(Color.black);
-        g.drawRect(5, 5, 200, 32);
+        g.drawRect(5, 485, 400, 32);
         
         g.setColor(Color.orange);
         g.setFont(new Font("Herculanum",Font.BOLD,15));
-        g.drawString("Munitions: " + ammo, 5, 50);
+        g.drawString("Munitions: " + ammo, 5, 480);
 
         g.drawString("Score : "+this.score,500,20);
 

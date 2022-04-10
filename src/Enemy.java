@@ -53,14 +53,14 @@ public class Enemy extends GameObject{
             */
 			//Déplacement vers le joueur en ignorant les collisions avec les murs
 			if(tempObject.getId()==ID.Player){
-				if(((Joueur)(tempObject)).game.hp<1){
+				if(((Joueur)(tempObject)).game.hp==0){
 					this.velY=0;
 					this.velX=0;
 				}else{
-					if(tempObject.x>this.x) this.velX = 2;
-					else this.velX = -2;
-					if(tempObject.y>this.y) this.velY = 2;
-					else this.velY = -2;
+					if(tempObject.x>this.x) this.velX = speed;
+					else this.velX = -speed;
+					if(tempObject.y>this.y) this.velY = speed;
+					else this.velY = -speed;
 				}
 			}
             if(tempObject.getId() == ID.Bullet) {
